@@ -13,11 +13,6 @@ repositories {
   mavenCentral()
 }
 
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
-}
-
 kotlin {
   jvm {
     compilations.all {
@@ -28,6 +23,7 @@ kotlin {
       useJUnitPlatform()
     }
   }
+
   js(IR) {
     compilations.all {
       packageJson {
@@ -38,6 +34,7 @@ kotlin {
       binaries.executable()
     }
   }
+
   val hostOs = System.getProperty("os.name")
   val isMingwX64 = hostOs.startsWith("Windows")
   val nativeTarget = when {
@@ -73,17 +70,12 @@ val javadocJar = tasks.register<Jar>("javadocJar") {
   from(file("docs/dokka/${project.version}"))
 }
 
+tasks.withType<Jar> {
+  enabled = true
+}
+
 publishing {
   repositories {
-    maven {
-      name = "GitHub"
-      url = uri("https://maven.pkg.github.com/k-libs/k-stack")
-      credentials {
-        username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-        password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-      }
-    }
-
     maven {
       name = "Sonatype"
       url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
@@ -99,8 +91,8 @@ publishing {
       from(components["java"])
       artifact(javadocJar)
       pom {
-        name.set("MD5")
-        description.set("Convenient MD5 hashing.")
+        name.set("K-Stack")
+        description.set("Simple, pure Kotlin stack implementation")
         url.set("https://github.com/k-libs/k-stack")
 
         licenses {
