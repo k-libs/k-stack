@@ -1,0 +1,56 @@
+= k-stack
+:source-highlighter: highlightjs
+:icons: font
+:lib-version: 0.1.0
+
+image:https://img.shields.io/github/license/k-libs/k-stack[GitHub]
+image:https://img.shields.io/badge/docs-dokka-green[link="https://k-libs.github.io/k-stack/dokka/0.1.0/k-stack/io.foxcapades.lib.k.stack/index.html"]
+
+A simple, pure Kotlin stack implementation.
+
+== Import
+
+.build.gradle.kts
+[source, kotlin, subs="verbatim,attributes"]
+----
+  implementation("io.foxcapades.lib:k-stack:{lib-version}")
+----
+
+.build.gradle
+[source, groovy, subs="verbatim,attributes"]
+----
+  implementation "io.foxcapades.lib:k-stack:{lib-version}"
+----
+
+.pom.xml
+[source, xml, subs="verbatim,attributes"]
+----
+    <dependency>
+      <groupId>io.foxcapades.lib</groupId>
+      <artifactId>k-stack</artifactId>
+      <version>{lib-version}</version>
+    </dependency>
+----
+
+== Usage
+
+.Kotlin
+[source, kotlin]
+----
+import io.foxcapades.lib.k.stack.*
+
+fun main() {
+  val stack1 = stackOf(1, 2, 3)
+
+  stack1.pop() // 1
+  stack1.pop() // 2
+  stack1.pop() // 3
+
+  val items2 = listOf(1, 2, 3)
+  val stack2 = stackOf(items)
+
+  stack2.pop() // 1
+  stack2.pop() // 2
+  stack2.pop() // 3
+}
+----
