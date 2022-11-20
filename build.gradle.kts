@@ -87,9 +87,9 @@ publishing {
   }
 
   publications {
-    create<MavenPublication>("gpr") {
-      from(components["java"])
+    withType<MavenPublication> {
       artifact(javadocJar)
+
       pom {
         name.set("K-Stack")
         description.set("Simple, pure Kotlin stack implementation")
@@ -124,5 +124,5 @@ signing {
   useGpgCmd()
 
   sign(configurations.archives.get())
-  sign(publishing.publications["gpr"])
+  publishing.publications.withType<MavenPublication> { sign(this) }
 }

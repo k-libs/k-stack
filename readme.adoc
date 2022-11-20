@@ -3,8 +3,8 @@
 :icons: font
 :lib-version: 0.1.0
 
-image:https://img.shields.io/github/license/k-libs/k-stack[GitHub]
-image:https://img.shields.io/badge/docs-dokka-green[link="https://k-libs.github.io/k-stack/dokka/0.1.0/k-stack/io.foxcapades.lib.k.stack/index.html"]
+image:https://img.shields.io/badge/license-MIT-green[GitHub]
+image:https://img.shields.io/badge/docs-dokka-brightgreen[link="https://k-libs.github.io/k-stack/dokka/0.1.0/k-stack/io.foxcapades.lib.k.stack/index.html"]
 
 A simple, pure Kotlin stack implementation.
 
@@ -14,22 +14,6 @@ A simple, pure Kotlin stack implementation.
 [source, kotlin, subs="verbatim,attributes"]
 ----
   implementation("io.foxcapades.lib:k-stack:{lib-version}")
-----
-
-.build.gradle
-[source, groovy, subs="verbatim,attributes"]
-----
-  implementation "io.foxcapades.lib:k-stack:{lib-version}"
-----
-
-.pom.xml
-[source, xml, subs="verbatim,attributes"]
-----
-    <dependency>
-      <groupId>io.foxcapades.lib</groupId>
-      <artifactId>k-stack</artifactId>
-      <version>{lib-version}</version>
-    </dependency>
 ----
 
 == Usage
