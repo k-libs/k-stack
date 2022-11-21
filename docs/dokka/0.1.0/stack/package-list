@@ -1,0 +1,23 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:io.klibs.collections////PointingToDeclaration/stack/io.klibs.collections/index.html
+$dokka.location:io.klibs.collections//stackOf/#kotlin.Array[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/stack/io.klibs.collections/stack-of.html
+$dokka.location:io.klibs.collections//stackOf/#kotlin.collections.Iterable[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/stack/io.klibs.collections/stack-of.html
+$dokka.location:io.klibs.collections/Stack///PointingToDeclaration/stack/io.klibs.collections/-stack/index.html
+$dokka.location:io.klibs.collections/Stack/Stack/#kotlin.Int#kotlin.Float#kotlin.Int/PointingToDeclaration/stack/io.klibs.collections/-stack/-stack.html
+$dokka.location:io.klibs.collections/Stack/capacity/#/PointingToDeclaration/stack/io.klibs.collections/-stack/capacity.html
+$dokka.location:io.klibs.collections/Stack/contains/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/stack/io.klibs.collections/-stack/contains.html
+$dokka.location:io.klibs.collections/Stack/containsAll/#kotlin.collections.Collection[TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration/stack/io.klibs.collections/-stack/contains-all.html
+$dokka.location:io.klibs.collections/Stack/equals/#kotlin.Any?/PointingToDeclaration/stack/io.klibs.collections/-stack/equals.html
+$dokka.location:io.klibs.collections/Stack/hashCode/#/PointingToDeclaration/stack/io.klibs.collections/-stack/hash-code.html
+$dokka.location:io.klibs.collections/Stack/isEmpty/#/PointingToDeclaration/stack/io.klibs.collections/-stack/is-empty.html
+$dokka.location:io.klibs.collections/Stack/isNotEmpty/#/PointingToDeclaration/stack/io.klibs.collections/-stack/is-not-empty.html
+$dokka.location:io.klibs.collections/Stack/iterator/#/PointingToDeclaration/stack/io.klibs.collections/-stack/iterator.html
+$dokka.location:io.klibs.collections/Stack/maxSize/#/PointingToDeclaration/stack/io.klibs.collections/-stack/max-size.html
+$dokka.location:io.klibs.collections/Stack/peek/#/PointingToDeclaration/stack/io.klibs.collections/-stack/peek.html
+$dokka.location:io.klibs.collections/Stack/pop/#/PointingToDeclaration/stack/io.klibs.collections/-stack/pop.html
+$dokka.location:io.klibs.collections/Stack/push/#TypeParam(bounds=[kotlin.Any?])/PointingToDeclaration/stack/io.klibs.collections/-stack/push.html
+$dokka.location:io.klibs.collections/Stack/size/#/PointingToDeclaration/stack/io.klibs.collections/-stack/size.html
+$dokka.location:io.klibs.collections/Stack/toString/#/PointingToDeclaration/stack/io.klibs.collections/-stack/to-string.html
+io.klibs.collections
+
