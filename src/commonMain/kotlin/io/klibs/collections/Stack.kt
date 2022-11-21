@@ -1,4 +1,4 @@
-package io.foxcapades.lib.k.stack
+package io.klibs.collections
 
 import kotlin.math.max
 import kotlin.math.min

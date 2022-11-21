@@ -5,7 +5,7 @@ plugins {
   signing
 }
 
-group = "io.foxcapades.lib"
+group = "io.k-libs"
 version = "0.1.0"
 description = "A simple stack implementation."
 

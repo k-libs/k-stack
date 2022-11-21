@@ -1,1 +1,1 @@
-rootProject.name = "k-stack"
+rootProject.name = "stack"
