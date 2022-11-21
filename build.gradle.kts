@@ -25,13 +25,14 @@ kotlin {
   }
 
   js(IR) {
+    browser()
+    nodejs()
+    binaries.executable()
+
     compilations.all {
       packageJson {
         customField("description", project.description!!)
       }
-      browser()
-      nodejs()
-      binaries.executable()
     }
   }
 
