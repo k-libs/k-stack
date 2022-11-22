@@ -93,7 +93,7 @@ publishing {
 
       pom {
         name.set("K-Stack")
-        description.set("Simple, pure Kotlin stack implementation")
+        description.set(project.description)
         url.set("https://github.com/k-libs/k-stack")
 
         licenses {
