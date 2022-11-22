@@ -24,23 +24,34 @@ A simple, pure Kotlin stack implementation.
 import io.klibs.collections.*
 
 fun main() {
-  val stack1 = stackOf(1, 2, 3)
+  // Make a stack from varargs!
+  val stack = stackOf(1, 2, 3)
 
-  stack1.pop() // 1
-  stack1.pop() // 2
-  stack1.pop() // 3
+  // Make a stack from a collection!
+  val stack = stackOf(listOf(1, 2, 3))
 
-  val items2 = listOf(1, 2, 3)
-  val stack2 = stackOf(items)
+  // Make a stack the boring way!
+  val stack = Stack<Int>()
 
-  stack2.pop() // 1
-  stack2.pop() // 2
-  stack2.pop() // 3
+  // Make a stack the crazy way!
+  val stack = Stack<Int>(
+    initialCapacity = 16,
+    scaleFactor = 1.5F,
+    maxSize = 100
+  )
 
-  val stack3 = Stack<Int>()
+  // Push stuff onto a stack!
+  stack.push(3)
+  stack.push(2)
+  stack.push(1)
 
-  stack3.push(3)
-  stack3.push(2)
-  stack3.push(1)
+  // Pop stuff off of a stack!
+  stack.pop() // 1
+  stack.pop() // 2
+  stack.pop() // 3
+
+  // Iterate!
+  for (item in stack)
+    println("Popped another item off the stack!")
 }
 ----

@@ -294,6 +294,6 @@ class Stack<T> internal constructor(
      * @throws NoSuchElementException If there were no items available in this
      * iterator.
      */
-    override fun next() = if (size > 0) buffer[--size] as T else throw NoSuchElementException()
+    override fun next() = pop()
   }
 }
