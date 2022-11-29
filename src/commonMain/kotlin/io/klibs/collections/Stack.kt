@@ -23,7 +23,7 @@ import kotlin.math.min
  * @return A new `Stack` instance.
  *
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
- * @since 1.0.0
+ * @since 0.1.0
  */
 @Suppress("UNCHECKED_CAST")
 fun <T> stackOf(vararg items: T): Stack<T> {
@@ -53,7 +53,7 @@ fun <T> stackOf(vararg items: T): Stack<T> {
  * @return A new `Stack` instance.
  *
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
- * @since 1.0.0
+ * @since 0.1.0
  */
 fun <T> stackOf(items: Iterable<T>): Stack<T> {
   val tmp: Array<Any?> = items.toList().toTypedArray()
@@ -84,7 +84,7 @@ fun <T> stackOf(items: Iterable<T>): Stack<T> {
  * @param T Type of items that will be pushed onto this stack.
  *
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
- * @since 1.0.0
+ * @since 0.1.0
  */
 @Suppress(
   "UNCHECKED_CAST",
@@ -211,6 +211,20 @@ class Stack<T> internal constructor(
   }
 
   /**
+   * Operator function allowing array style access of the stack.
+   *
+   * @param index Zero-based index of the stack item to get.
+   *
+   * @return The target stack item.
+   *
+   * @throws IndexOutOfBoundsException If the given index is less than zero or
+   * greater than or equal to [size].
+   *
+   * @since 0.2.0
+   */
+  operator fun get(index: Int): T = buffer[internalIndex(index)] as T
+
+  /**
    * Returns `true` if this stack contains one or more items.
    *
    * @return `true` if this stack contains one or more items.
@@ -272,6 +286,18 @@ class Stack<T> internal constructor(
   override fun containsAll(elements: Collection<T>) = elements.all { contains(it) }
 
   /**
+   * Removes all items from this stack.
+   *
+   * The stack's capacity will not be changed.
+   *
+   * @since 0.2.0
+   */
+  fun clear() {
+    while (size > 0)
+      buffer[--size] = null
+  }
+
+  /**
    * Returns a new, destructive, consuming iterator over this stack's contents
    * that pops items from this stack as it is iterated.
    *
@@ -296,4 +322,6 @@ class Stack<T> internal constructor(
      */
     override fun next() = pop()
   }
+
+  private inline fun internalIndex(i: Int) = size - 1 - i
 }
