@@ -86,12 +86,6 @@ fun <T> stackOf(items: Iterable<T>): Stack<T> {
  * @author Elizabeth Paige Harper - https://github.com/foxcapades
  * @since 0.1.0
  */
-@Suppress(
-  "UNCHECKED_CAST",
-  "MemberVisibilityCanBePrivate",
-  "ReplaceSizeCheckWithIsNotEmpty",
-  "ReplaceSizeZeroCheckWithIsEmpty",
-)
 class Stack<T> internal constructor(
 
   /**
@@ -102,18 +96,18 @@ class Stack<T> internal constructor(
   /**
    * Resize scale factor.
    */
-  private var scale: Float = 1.5F,
+  val scaleFactor: Float = 1.5F,
 
   /**
    * Max capacity this stack will permit.
    */
   val maxSize: Int = Int.MAX_VALUE,
-) : Collection<T> {
+) {
 
   /**
    * Current number of items currently on the stack.
    */
-  override var size: Int = 0
+  var size: Int = 0
     private set
 
   /**
@@ -121,6 +115,36 @@ class Stack<T> internal constructor(
    */
   var capacity: Int = buffer.size
     private set
+
+  /**
+   * `true` if this stack contains zero items.
+   *
+   * @since 0.3.0
+   */
+  inline val isEmpty get() = size == 0
+
+  /**
+   * `true` if this stack contains one or more items.
+   *
+   * @since 0.3.0
+   */
+  inline val isNotEmpty get() = size != 0
+
+  /**
+   * Last valid index in this stack.
+   *
+   * @since 0.3.0
+   */
+  inline val lastIndex get() = size - 1
+
+  init {
+    if (scaleFactor <= 1)
+      throw IllegalArgumentException("scaleFactor given ($scaleFactor) was less than or equal to 1")
+    if (maxSize < 0)
+      throw IllegalArgumentException("maxSize given ($maxSize) was less than 0")
+    if (maxSize < buffer.size)
+      throw IllegalArgumentException("maxSize given ($maxSize) was less than the given initialSize (${buffer.size})")
+  }
 
   /**
    * Constructs a new [Stack] instance.
@@ -149,7 +173,7 @@ class Stack<T> internal constructor(
     initialCapacity: Int   = 8,
     scaleFactor:     Float = 1.5F,
     maxSize:         Int   = Int.MAX_VALUE
-  ) : this(Array(initialCapacity) { null }, scaleFactor, maxSize)
+  ) : this(arrayOfNulls(initialCapacity), scaleFactor, maxSize)
 
   /**
    * Pushes the given item onto the top of this stack.
@@ -171,7 +195,7 @@ class Stack<T> internal constructor(
       throw IllegalStateException()
 
     if (size == capacity) {
-      buffer   = buffer.copyOf(min(maxSize, max(capacity + 1, (capacity * scale).toInt())))
+      buffer   = buffer.copyOf(min(maxSize, max(capacity + 1, (capacity * scaleFactor).toInt())))
       capacity = buffer.size
     }
 
@@ -187,6 +211,7 @@ class Stack<T> internal constructor(
    *
    * @throws NoSuchElementException If this stack is empty.
    */
+  @Suppress("UNCHECKED_CAST")
   fun pop(): T {
     if (size < 1)
       throw NoSuchElementException()
@@ -203,6 +228,7 @@ class Stack<T> internal constructor(
    *
    * @throws NoSuchElementException If this stack is empty.
    */
+  @Suppress("UNCHECKED_CAST")
   fun peek(): T {
     if (size < 1)
       throw NoSuchElementException()
@@ -222,14 +248,8 @@ class Stack<T> internal constructor(
    *
    * @since 0.2.0
    */
+  @Suppress("UNCHECKED_CAST")
   operator fun get(index: Int): T = buffer[internalIndex(index)] as T
-
-  /**
-   * Returns `true` if this stack contains one or more items.
-   *
-   * @return `true` if this stack contains one or more items.
-   */
-  fun isNotEmpty() = size != 0
 
   /**
    * Returns a string representation of this stack containing the stack's
@@ -264,26 +284,20 @@ class Stack<T> internal constructor(
    */
   override fun hashCode() = 420 + buffer.contentHashCode()
 
-  /**
-   * Returns `true` if this stack contains zero items.
-   *
-   * @return `true` if this stack contains zero items.
-   */
-  override fun isEmpty() = size == 0
 
   /**
    * Returns `true` if this stack contains the given [element].
    *
    * @return `true` if this stack contains the given [element].
    */
-  override fun contains(element: T) = buffer.contains(element)
+  operator fun contains(element: T) = buffer.contains(element)
 
   /**
    * Returns `true` if this stack contains all the given [elements].
    *
    * @return `true` if this stack contains all the given [elements].
    */
-  override fun containsAll(elements: Collection<T>) = elements.all { contains(it) }
+  fun containsAll(elements: Collection<T>) = elements.all { contains(it) }
 
   /**
    * Removes all items from this stack.
@@ -302,26 +316,58 @@ class Stack<T> internal constructor(
    * that pops items from this stack as it is iterated.
    *
    * @return A new iterator.
+   *
+   * @since 0.3.0
    */
-  override fun iterator() = object : Iterator<T> {
-
-    /**
-     * Returns `true` if this iterator contains at least one more item.
-     *
-     * @return `true` if this iterator contains at least one more item.
-     */
-    override fun hasNext() = size > 0
-
-    /**
-     * Returns the next item in this iterator.
-     *
-     * @return The next item in this iterator.
-     *
-     * @throws NoSuchElementException If there were no items available in this
-     * iterator.
-     */
-    override fun next() = pop()
+  fun destructiveIterator() = object {
+    operator fun hasNext() = size > 0
+    operator fun next() = pop()
   }
+
+  /**
+   * Returns a new, non-destructive iterator over this stack's contents.
+   *
+   * Unlike the iterator returned by [destructiveIterator], usage of this
+   * iterator will not change the state of the source [Stack].
+   *
+   * @return A new iterator.
+   *
+   * @since 0.3.0
+   */
+  fun nonDestructiveIterator() = object {
+    private var pos = 0
+    operator fun hasNext() = pos < lastIndex
+    @Suppress("UNCHECKED_CAST")
+    operator fun next() = buffer[internalIndex(pos++)] as T
+  }
+
+  /**
+   * Returns an array copy of the current contents of this [Stack] instance.
+   *
+   * **Example:**
+   * ```
+   * myStack.toArray(::Array<String>)
+   * ```
+   *
+   * @return An array copy of the current contents of this [Stack] instance.
+   *
+   * @since 0.3.0
+   */
+  fun toArray(arrayProvider: (size: Int, init: (Int) -> T) -> Array<T>) = arrayProvider(size, ::get)
+
+  /**
+   * Pops the elements of this stack into an array.
+   *
+   * **Example:**
+   * ```
+   * myStack.toArray(::Array<String>)
+   * ```
+   *
+   * @return The elements popped from this [Stack]
+   *
+   * @since 0.3.0
+   */
+  fun popToArray(arrayProvider: (size: Int, init: (Int) -> T) -> Array<T>) = arrayProvider(size) { pop() }
 
   private inline fun internalIndex(i: Int) = size - 1 - i
 }
